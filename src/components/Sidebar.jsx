@@ -1,5 +1,5 @@
-import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   IoPersonOutline,
   IoPricetagOutline,
@@ -14,7 +14,8 @@ import styled from "styled-components";
 import logo from "../logo.png";
 
 const StyledSidebar = styled.aside`
-  background-color: #f5f5f5;
+  background-color: #333;
+  color: #fff;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   padding: 1rem;
   height: 100%;
@@ -42,16 +43,29 @@ const MenuList = styled.ul`
 
 const MenuItem = styled.li`
   margin-bottom: 0.5rem;
+
+  &.active {
+    a {
+      color: tomato;
+    }
+  }
 `;
 
 const MenuLink = styled(NavLink)`
   display: flex;
   align-items: center;
-  color: #333;
+  color: #fff;
   text-decoration: none;
+
   &:hover {
-    color: #000;
+    color: tomato;
   }
+
+  &.active,
+  &.active:hover {
+    color: tomato;
+  }
+
   svg {
     margin-right: 0.5rem;
   }
@@ -83,15 +97,45 @@ const Logo = styled.img`
   margin: 0px 50px;
 `;
 
+const LoadingScreen = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  z-index: 9999;
+`;
+
 const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useSelector((state) => state.auth);
+  const [activeMenu, setActiveMenu] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const logout = () => {
     dispatch(LogOut());
     dispatch(reset());
     navigate("/");
+  };
+
+  const handleMenuClick = async (menu) => {
+    setIsLoading(true);
+
+    // Simulating loading time
+    await Promise.all([
+      new Promise((resolve) => setTimeout(resolve, 5000)), // Minimum loading time of 1 second
+      new Promise((resolve) => setTimeout(resolve, 2000)), // Simulating additional loading time if needed
+    ]);
+
+    setIsLoading(false);
+    setActiveMenu(menu);
   };
 
   return (
@@ -103,14 +147,20 @@ const Sidebar = () => {
       </ContainerLogo>
       <MenuLabel>MENU</MenuLabel>
       <MenuList>
-        <MenuItem>
+        <MenuItem
+          className={location.pathname === "/dashboard" ? "active" : ""}
+          onClick={() => handleMenuClick("dashboard")}
+        >
           <MenuLink to={"/dashboard"}>
             <IoHomeOutline /> Dashboard
           </MenuLink>
         </MenuItem>
       </MenuList>
       <MenuList>
-        <MenuItem>
+        <MenuItem
+          className={location.pathname === "/products" ? "active" : ""}
+          onClick={() => handleMenuClick("products")}
+        >
           <MenuLink to={"/products"}>
             <IoPricetagOutline /> Products
           </MenuLink>
@@ -118,7 +168,10 @@ const Sidebar = () => {
       </MenuList>
       {user && user.role === "admin" && (
         <MenuList>
-          <MenuItem>
+          <MenuItem
+            className={location.pathname === "/users" ? "active" : ""}
+            onClick={() => handleMenuClick("users")}
+          >
             <MenuLink to={"/users"}>
               <IoPersonOutline /> Users
             </MenuLink>
@@ -126,14 +179,20 @@ const Sidebar = () => {
         </MenuList>
       )}
       <MenuList>
-        <MenuItem>
+        <MenuItem
+          className={location.pathname === "/graphic" ? "active" : ""}
+          onClick={() => handleMenuClick("graphic")}
+        >
           <MenuLink to={"/graphic"}>
             <IoBarChartOutline /> Graphic
           </MenuLink>
         </MenuItem>
       </MenuList>
       <MenuList>
-        <MenuItem>
+        <MenuItem
+          className={location.pathname === "/report" ? "active" : ""}
+          onClick={() => handleMenuClick("report")}
+        >
           <MenuLink to={"/report"}>
             <IoNewspaperOutline /> Report
           </MenuLink>
@@ -147,6 +206,7 @@ const Sidebar = () => {
           </LogoutButton>
         </MenuItem>
       </MenuList>
+      {isLoading && <LoadingScreen>Loading...</LoadingScreen>}
     </StyledSidebar>
   );
 };
