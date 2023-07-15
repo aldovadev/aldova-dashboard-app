@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoginUser, reset } from "../features/authSlice";
 import styled from "styled-components";
+import logo from "../logo.png";
 
 const HeroSection = styled.section`
   height: 100vh;
@@ -64,6 +65,20 @@ const ErrorMessage = styled.p`
   margin-bottom: 1rem;
 `;
 
+const ContainerLogo = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 5px;
+`;
+
+const Logo = styled.img`
+  width: auto;
+  height: 100px;
+  margin: 0px 50px;
+`;
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -89,7 +104,12 @@ const Login = () => {
     <HeroSection>
       <LoginForm onSubmit={handleAuth}>
         {isError && <ErrorMessage>{message}</ErrorMessage>}
-        <h1 className="title">LOGIN</h1>
+        <ContainerLogo>
+          <Logo src={logo} alt="logo" />
+        </ContainerLogo>
+        <h1 className="title" style={{ color: "tomato" }}>
+          Login Dashboard
+        </h1>
         <div className="field">
           <label className="label">Email</label>
           <div className="control">

@@ -130,13 +130,15 @@ const Sidebar = () => {
 
     // Simulating loading time
     await Promise.all([
-      new Promise((resolve) => setTimeout(resolve, 5000)), // Minimum loading time of 1 second
+      new Promise((resolve) => setTimeout(resolve, 1000)), // Minimum loading time of 1 second
       new Promise((resolve) => setTimeout(resolve, 2000)), // Simulating additional loading time if needed
     ]);
 
     setIsLoading(false);
     setActiveMenu(menu);
   };
+
+  const isAdmin = user && user.role === "admin";
 
   return (
     <StyledSidebar>
@@ -166,18 +168,6 @@ const Sidebar = () => {
           </MenuLink>
         </MenuItem>
       </MenuList>
-      {user && user.role === "admin" && (
-        <MenuList>
-          <MenuItem
-            className={location.pathname === "/users" ? "active" : ""}
-            onClick={() => handleMenuClick("users")}
-          >
-            <MenuLink to={"/users"}>
-              <IoPersonOutline /> Users
-            </MenuLink>
-          </MenuItem>
-        </MenuList>
-      )}
       <MenuList>
         <MenuItem
           className={location.pathname === "/graphic" ? "active" : ""}
@@ -188,16 +178,30 @@ const Sidebar = () => {
           </MenuLink>
         </MenuItem>
       </MenuList>
-      <MenuList>
-        <MenuItem
-          className={location.pathname === "/report" ? "active" : ""}
-          onClick={() => handleMenuClick("report")}
-        >
-          <MenuLink to={"/report"}>
-            <IoNewspaperOutline /> Report
-          </MenuLink>
-        </MenuItem>
-      </MenuList>
+      {isAdmin && (
+        <>
+          <MenuList>
+            <MenuItem
+              className={location.pathname === "/users" ? "active" : ""}
+              onClick={() => handleMenuClick("users")}
+            >
+              <MenuLink to={"/users"}>
+                <IoPersonOutline /> Users
+              </MenuLink>
+            </MenuItem>
+          </MenuList>
+          <MenuList>
+            <MenuItem
+              className={location.pathname === "/report" ? "active" : ""}
+              onClick={() => handleMenuClick("report")}
+            >
+              <MenuLink to={"/report"}>
+                <IoNewspaperOutline /> Report
+              </MenuLink>
+            </MenuItem>
+          </MenuList>
+        </>
+      )}
       <MenuLabel>SETTINGS</MenuLabel>
       <MenuList>
         <MenuItem>
