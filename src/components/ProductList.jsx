@@ -1,6 +1,77 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import styled from "styled-components";
+
+const Title = styled.h1`
+  font-size: 2rem;
+  font-weight: bold;
+`;
+
+const AddButton = styled(Link)`
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #3273dc;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #2768c4;
+  }
+`;
+
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    padding: 0.5rem;
+  }
+
+  td {
+    padding: 0.5rem;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+`;
+
+const EditButton = styled(Link)`
+  display: inline-block;
+  margin-right: 10px;
+  padding: 0.3rem 0.5rem;
+  background-color: #209cee;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #187dbc;
+  }
+`;
+
+const DeleteButton = styled.button`
+  display: inline-block;
+  margin-left: 10px;
+  padding: 0.3rem 0.5rem;
+  background-color: #ff3860;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #e61c4b;
+  }
+`;
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -20,13 +91,10 @@ const ProductList = () => {
   };
 
   return (
-    <div>
-      <h1 className="title">Products</h1>
-      <h2 className="subtitle">List of Products</h2>
-      <Link to="/products/add" className="button is-primary mb-2">
-        Add New
-      </Link>
-      <table className="table is-striped is-fullwidth">
+    <div style={{ paddingLeft: "30px" }}>
+      <Title>LIST OF PRODUCTS</Title>
+      <AddButton to="/products/add">ADD NEW</AddButton>
+      <Table>
         <thead>
           <tr>
             <th>No</th>
@@ -44,23 +112,17 @@ const ProductList = () => {
               <td>{product.price}</td>
               <td>{product.user.name}</td>
               <td>
-                <Link
-                  to={`/products/edit/${product.uuid}`}
-                  className="button is-small is-info"
-                >
+                <EditButton to={`/products/edit/${product.uuid}`}>
                   Edit
-                </Link>
-                <button
-                  onClick={() => deleteProduct(product.uuid)}
-                  className="button is-small is-danger"
-                >
+                </EditButton>
+                <DeleteButton onClick={() => deleteProduct(product.uuid)}>
                   Delete
-                </button>
+                </DeleteButton>
               </td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 };

@@ -1,6 +1,62 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import styled from "styled-components";
+
+const Title = styled.h1`
+  font-size: 2rem;
+  font-weight: bold;
+`;
+
+const Card = styled.div`
+  box-shadow: none;
+`;
+
+const FormContent = styled.div`
+  padding: 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  color: "#f3f3f3";
+`;
+
+const Form = styled.form`
+  .has-text-centered {
+    text-align: center;
+  }
+
+  .field {
+    margin-bottom: 1rem;
+  }
+
+  .label {
+    font-weight: bold;
+  }
+
+  .control {
+    input,
+    select {
+      width: 100%;
+      padding: 0.5rem;
+    }
+  }
+
+  .select {
+    position: relative;
+    display: inline-block;
+
+    &:after {
+      content: "▼";
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+  }
+
+  .button {
+    width: 100%;
+  }
+`;
 
 const FormEditProduct = () => {
   const [name, setName] = useState("");
@@ -42,50 +98,52 @@ const FormEditProduct = () => {
   };
 
   return (
-    <div>
-      <h1 className="title">Products</h1>
-      <h2 className="subtitle">Edit Product</h2>
-      <div className="card is-shadowless">
-        <div className="card-content">
-          <div className="content">
-            <form onSubmit={updateProduct}>
-              <p className="has-text-centered">{msg}</p>
-              <div className="field">
-                <label className="label">Name</label>
-                <div className="control">
-                  <input
-                    type="text"
-                    className="input"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Product Name"
-                  />
-                </div>
+    <div
+      style={{
+        padding: "30px",
+        borderRadius: "30px",
+      }}
+    >
+      <Title>Edit Product</Title>
+      <Card className="card is-shadowless">
+        <FormContent className="card-content">
+          <Form onSubmit={updateProduct}>
+            <p className="has-text-centered">{msg}</p>
+            <div className="field">
+              <label className="label">Name</label>
+              <div className="control">
+                <input
+                  type="text"
+                  className="input"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Product Name"
+                />
               </div>
-              <div className="field">
-                <label className="label">Price</label>
-                <div className="control">
-                  <input
-                    type="text"
-                    className="input"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    placeholder="Price"
-                  />
-                </div>
+            </div>
+            <div className="field">
+              <label className="label">Price</label>
+              <div className="control">
+                <input
+                  type="text"
+                  className="input"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  placeholder="Price"
+                />
               </div>
+            </div>
 
-              <div className="field">
-                <div className="control">
-                  <button type="submit" className="button is-success">
-                    Update
-                  </button>
-                </div>
+            <div className="field">
+              <div className="control">
+                <button type="submit" className="button is-success">
+                  Update
+                </button>
               </div>
-            </form>
-          </div>
-        </div>
-      </div>
+            </div>
+          </Form>
+        </FormContent>
+      </Card>
     </div>
   );
 };
