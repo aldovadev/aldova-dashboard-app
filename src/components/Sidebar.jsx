@@ -130,7 +130,6 @@ const Sidebar = () => {
 
     // Simulating loading time
     await Promise.all([
-      new Promise((resolve) => setTimeout(resolve, 1000)), // Minimum loading time of 1 second
       new Promise((resolve) => setTimeout(resolve, 2000)), // Simulating additional loading time if needed
     ]);
 
