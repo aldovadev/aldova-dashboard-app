@@ -3,6 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import * as XLSX from "xlsx";
 import animasi from "../report.gif";
+import BASE_URL from "../app/store";
 
 const Container = styled.div`
   display: flex;
@@ -11,6 +12,7 @@ const Container = styled.div`
   align-items: center;
   margin-right: 1rem;
   width: 100%;
+  height: 80vh;
 `;
 
 const Button = styled.button`
@@ -51,12 +53,12 @@ const ReportData = () => {
   }, []);
 
   const getProducts = async () => {
-    const response = await axios.get("http://localhost:5000/products");
+    const response = await axios.get(BASE_URL + "products");
     setProducts(response.data);
   };
 
   const getUsers = async () => {
-    const response = await axios.get("http://localhost:5000/users");
+    const response = await axios.get(BASE_URL + "users");
     setUsers(response.data);
   };
 

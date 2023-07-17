@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import BASE_URL from "../app/store";
 
 const Title = styled.h1`
   font-size: 2rem;
@@ -47,7 +48,7 @@ const FormAddProduct = () => {
   const saveProduct = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/products", {
+      await axios.post(BASE_URL + "products", {
         name: name,
         price: price,
       });
@@ -60,7 +61,7 @@ const FormAddProduct = () => {
   };
 
   return (
-    <div style={{ paddingLeft: "30px", borderRadius: "30px" }}>
+    <div style={{ paddingLeft: "30px", borderRadius: "30px", height: "80vh" }}>
       <Title>ADD NEW PRODUCT</Title>
       <Card className="card">
         <Content className="card-content">

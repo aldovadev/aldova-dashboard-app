@@ -5,9 +5,10 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  min-height: 100vh;
+  max-height: 100px;
   flex-wrap: wrap;
   padding: 30px;
+  height: 80vh;
 `;
 
 const SidebarContainer = styled.div`

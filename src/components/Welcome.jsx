@@ -12,7 +12,7 @@ const WelcomeContainer = styled.div`
   border-radius: 20px;
   background: #f5f5f5;
   width: 100%;
-  height: 100%;
+  height: 80vh;
 `;
 
 const Title = styled.h1`

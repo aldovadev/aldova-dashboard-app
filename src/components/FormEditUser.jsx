@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import BASE_URL from "../app/store";
 
 const Title = styled.h1`
   font-size: 2rem;
@@ -71,7 +72,7 @@ const FormEditUser = () => {
   useEffect(() => {
     const getUserById = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/users/${id}`);
+        const response = await axios.get(`${BASE_URL}users/${id}`);
         setName(response.data.name);
         setEmail(response.data.email);
         setRole(response.data.role);
@@ -87,7 +88,7 @@ const FormEditUser = () => {
   const updateUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:5000/users/${id}`, {
+      await axios.patch(`${BASE_URL}users/${id}`, {
         name: name,
         email: email,
         password: password,
@@ -103,7 +104,7 @@ const FormEditUser = () => {
   };
 
   return (
-    <div style={{ padding: "30px", borderRadius: "30px" }}>
+    <div style={{ padding: "30px", borderRadius: "30px", height: "80vh" }}>
       <Title>EDIT USER</Title>
       <Card className="card is-shadowless">
         <FormContent className="card-content">

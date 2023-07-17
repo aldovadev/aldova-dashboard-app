@@ -116,7 +116,6 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useSelector((state) => state.auth);
-  const [activeMenu, setActiveMenu] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const logout = () => {
@@ -134,7 +133,6 @@ const Sidebar = () => {
     ]);
 
     setIsLoading(false);
-    setActiveMenu(menu);
   };
 
   const isAdmin = user && user.role === "admin";

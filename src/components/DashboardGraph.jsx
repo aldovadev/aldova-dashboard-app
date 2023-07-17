@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import BASE_URL from "../app/store";
+
 import {
   VictoryChart,
   VictoryScatter,
@@ -15,8 +17,8 @@ const DashboardContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  padding: 2rem;
-  height: 100%;
+  height: 80vh;
+  padding: 1rem;
 `;
 
 const ChartContainer = styled.div`
@@ -24,14 +26,18 @@ const ChartContainer = styled.div`
   background-color: #ffffff;
   border-radius: 30px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 45%;
-  height: auto;
-  margin-bottom: 20px;
-`;
+  width: 48%;
+  height: 48%;
 
-const ChartTitle = styled.h3`
-  font-size: 1rem;
-  font-weight: bold;
+  .VictoryContainer {
+    height: 60%;
+    width: auto;
+  }
+
+  svg {
+    height: 80%;
+    width: auto;
+  }
 `;
 
 const ProductList = () => {
@@ -42,7 +48,7 @@ const ProductList = () => {
   }, []);
 
   const getProducts = async () => {
-    const response = await axios.get("http://localhost:5000/products");
+    const response = await axios.get(BASE_URL + "products");
     setProducts(response.data);
   };
 
@@ -54,83 +60,81 @@ const ProductList = () => {
   ];
 
   return (
-    <div>
-      <DashboardContainer>
-        <ChartContainer>
-          <ChartTitle>Harga Barang (Scatter Chart)</ChartTitle>
-          <VictoryChart>
-            <VictoryScatter
-              data={products.map((product) => ({
-                x: product.name,
-                y: product.price,
-              }))}
-              style={{
-                data: { fill: colorSchemes[0][0], stroke: "black" },
-              }}
-            />
-            <VictoryAxis
-              style={{
-                tickLabels: { angle: -25, padding: 5 },
-              }}
-            />
-            <VictoryAxis dependentAxis />
-          </VictoryChart>
-        </ChartContainer>
-
-        <ChartContainer>
-          <ChartTitle>Harga Barang (Line Chart)</ChartTitle>
-          <VictoryChart>
-            <VictoryLine
-              data={products.map((product) => ({
-                x: product.name,
-                y: product.price,
-              }))}
-              style={{
-                data: { stroke: colorSchemes[1][1] },
-              }}
-            />
-            <VictoryAxis
-              style={{
-                tickLabels: { angle: -25, padding: 5 },
-              }}
-            />
-            <VictoryAxis dependentAxis />
-          </VictoryChart>
-        </ChartContainer>
-
-        <ChartContainer>
-          <ChartTitle>Harga Barang (Pie Chart)</ChartTitle>
-          <VictoryPie
+    <DashboardContainer>
+      <ChartContainer>
+        {/* <ChartTitle>Harga Barang (Scatter Chart)</ChartTitle> */}
+        <VictoryChart>
+          <VictoryScatter
             data={products.map((product) => ({
               x: product.name,
               y: product.price,
             }))}
-            colorScale={colorSchemes[2]}
+            style={{
+              data: { fill: colorSchemes[0][0], stroke: "black" },
+            }}
           />
-        </ChartContainer>
+          <VictoryAxis
+            style={{
+              tickLabels: { angle: -10, padding: 5 },
+            }}
+          />
+          <VictoryAxis dependentAxis />
+        </VictoryChart>
+      </ChartContainer>
 
-        <ChartContainer>
-          <ChartTitle>Harga Barang (Area Chart)</ChartTitle>
-          <VictoryChart>
-            <VictoryArea
-              data={products.map((product) => ({
-                x: product.name,
-                y: product.price,
-              }))}
-              style={{
-                data: { fill: colorSchemes[3][3] },
-              }}
-            />
-            <VictoryAxis
-              style={{
-                tickLabels: { angle: -25, padding: 5 },
-              }}
-            />
-            <VictoryAxis dependentAxis />
-          </VictoryChart>
-        </ChartContainer>
-      </DashboardContainer>
-    </div>
+      <ChartContainer>
+        {/* <ChartTitle>Harga Barang (Line Chart)</ChartTitle> */}
+        <VictoryChart>
+          <VictoryLine
+            data={products.map((product) => ({
+              x: product.name,
+              y: product.price,
+            }))}
+            style={{
+              data: { stroke: colorSchemes[1][1] },
+            }}
+          />
+          <VictoryAxis
+            style={{
+              tickLabels: { angle: -10, padding: 5 },
+            }}
+          />
+          <VictoryAxis dependentAxis />
+        </VictoryChart>
+      </ChartContainer>
+
+      <ChartContainer>
+        {/* <ChartTitle>Harga Barang (Pie Chart)</ChartTitle> */}
+        <VictoryPie
+          data={products.map((product) => ({
+            x: product.name,
+            y: product.price,
+          }))}
+          colorScale={colorSchemes[2]}
+        />
+      </ChartContainer>
+
+      <ChartContainer>
+        {/* <ChartTitle>Harga Barang (Area Chart)</ChartTitle> */}
+        <VictoryChart>
+          <VictoryArea
+            data={products.map((product) => ({
+              x: product.name,
+              y: product.price,
+            }))}
+            style={{
+              data: { fill: colorSchemes[3][3] },
+            }}
+          />
+          <VictoryAxis
+            style={{
+              tickLabels: { angle: -10, padding: 5 },
+            }}
+          />
+          <VictoryAxis dependentAxis />
+        </VictoryChart>
+      </ChartContainer>
+    </DashboardContainer>
   );
 };
 

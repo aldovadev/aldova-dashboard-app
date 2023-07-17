@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import BASE_URL from "../app/store";
 
 const Title = styled.h1`
   font-size: 2rem;
@@ -81,17 +82,17 @@ const Userlist = () => {
   }, []);
 
   const getUsers = async () => {
-    const response = await axios.get("http://localhost:5000/users");
+    const response = await axios.get(`${BASE_URL}users`);
     setUsers(response.data);
   };
 
   const deleteUser = async (userId) => {
-    await axios.delete(`http://localhost:5000/users/${userId}`);
+    await axios.delete(`${BASE_URL}users/${userId}`);
     getUsers();
   };
 
   return (
-    <div style={{ paddingLeft: "30px" }}>
+    <div style={{ paddingLeft: "30px", height: "80vh" }}>
       <Title>LIST OF USERS</Title>
       <AddButton to="/users/add">ADD NEW</AddButton>
       <Table>

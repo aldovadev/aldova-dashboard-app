@@ -20,6 +20,7 @@ const LoginForm = styled.form`
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 80vh;
 
   .title {
     text-align: center;
@@ -98,6 +99,8 @@ const Login = () => {
   const handleAuth = (e) => {
     e.preventDefault();
     dispatch(LoginUser({ email, password }));
+    // console.log(email);
+    // console.log(password);
   };
 
   return (

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import BASE_URL from "../app/store";
 
 const Title = styled.h1`
   font-size: 2rem;
@@ -68,9 +69,7 @@ const FormEditProduct = () => {
   useEffect(() => {
     const getProductById = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/products/${id}`
-        );
+        const response = await axios.get(`${BASE_URL}products/${id}`);
         setName(response.data.name);
         setPrice(response.data.price);
       } catch (error) {
@@ -85,7 +84,7 @@ const FormEditProduct = () => {
   const updateProduct = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:5000/products/${id}`, {
+      await axios.patch(`${BASE_URL}products/${id}`, {
         name: name,
         price: price,
       });
@@ -102,6 +101,7 @@ const FormEditProduct = () => {
       style={{
         padding: "30px",
         borderRadius: "30px",
+        height: "80vh",
       }}
     >
       <Title>Edit Product</Title>
